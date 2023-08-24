@@ -11,7 +11,7 @@ const Input = ({ type = 'text', label, id, onChange }: Input) => {
 			<label htmlFor={label} className='sr-only'>
 				{label}
 			</label>
-			<div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-1 focus-within:ring-inset focus-within:ring-zinc-600 sm:max-w-md'>
+			<div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md py-1 px-2'>
 				<input
 					type={type}
 					name={id}
