@@ -8,7 +8,7 @@ interface FormField {
 
 const FormField = ({ label, id, type, value, onChange }: FormField) => {
 	return (
-		<div className='sm:col-span-2'>
+		<div className='sm:col-span-2 mt-4'>
 			<label htmlFor={label} className='sr-only'>
 				{label}
 			</label>

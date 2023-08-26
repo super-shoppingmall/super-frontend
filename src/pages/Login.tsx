@@ -15,18 +15,18 @@ const Login = () => {
 				</p>
 			</div>
 
-			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm space-y-4'>
-				<section>
+			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<section className='mt-4'>
 					<LoginForm />
 				</section>
-				<section>
+				<section className='mt-4'>
 					<LoginInfoLinks />
 				</section>
-				<section>
+				<section className='mt-14'>
 					<h3 className='flex items-center mb-4'>
-						<div className='flex-grow bg bg-gray-300 h-px'></div>
+						<div className='flex-grow bg bg-gray-300 h-[0.02em]'></div>
 						<div className='flex-grow-0 mx-5 text dark:text-white'>SNS 계정으로 로그인</div>
-						<div className='flex-grow bg bg-gray-300 h-px'></div>
+						<div className='flex-grow bg bg-gray-300 h-[0.02em]'></div>
 					</h3>
 					<SocialLoginGroup />
 				</section>
