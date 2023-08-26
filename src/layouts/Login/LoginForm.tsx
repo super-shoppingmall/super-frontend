@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { formInitialData, loginFormReducer } from '../../reducers/loginReducer';
 import FormField from './FormField';
 import Spinner from '../../components/Spinner/Spinner';
+import LoginMessage from './LoginMessage';
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -45,7 +46,7 @@ const LoginForm = () => {
 
 	return (
 		<>
-			<form className='space-y-4' onSubmit={handleSubmitForm}>
+			<form className='relative' onSubmit={handleSubmitForm}>
 				<FormField
 					id='email'
 					type='email'
@@ -60,12 +61,15 @@ const LoginForm = () => {
 					value={formData.password}
 					onChange={handleChangeInput}
 				/>
-				<button className='w-full h-10 px-6 font-400 rounded-lg bg-black text-white' type='submit'>
+				{formData.state === 'ERROR' && <LoginMessage message={formData.stateMessage} />}
+				<button
+					className='w-full h-10 mt-8 px-6 font-400 rounded-lg bg-black text-white'
+					type='submit'
+				>
 					로그인
 				</button>
 			</form>
 			{isLoading && <Spinner />}
-			{formData.state === 'ERROR' && <div style={{ color: 'red' }}>{formData.stateMessage}</div>}
 		</>
 	);
 };
