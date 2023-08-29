@@ -10,7 +10,8 @@ const LoginForm = () => {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [formData, dispatchFormData] = useReducer(loginFormReducer, formInitialData);
-	const [submitCount, setSubmitCount] = useState(1);
+	const [submitCount, setSubmitCount] = useState(0);
+	const [loginCount, setLoginCount] = useState(0);
 
 	const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatchFormData({
@@ -21,28 +22,33 @@ const LoginForm = () => {
 
 	const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (submitCount > 5) {
-			alert('5번으로 계정 제한');
+
+		if (loginCount > 3) {
+			alert('5회 이상 로그인 오류로 \n보안을 위해 로그인이 제한됩니다.');
+			setLoginCount(5);
 			return;
 		}
 		setIsLoading(true);
 		dispatchFormData({ type: 'FORM_SUBMIT' });
-		setSubmitCount(prevSubmitCount => prevSubmitCount + 1);
+		setSubmitCount(prevC => prevC + 1);
 	};
 
 	useEffect(() => {
-		if (formData.state === 'SUCCESS') {
-			setIsLoading(false);
-			setSubmitCount(1);
-			dispatchFormData({ type: 'FORM_RESET' });
-			alert(formData.stateMessage);
-			navigate('/');
-		}
+		setIsLoading(false);
 
-		if (formData.state === 'ERROR') {
-			setIsLoading(false);
+		switch (formData.stateMessage) {
+			case 'SUCCESS_LOGIN':
+				setLoginCount(1);
+				dispatchFormData({ type: 'FORM_RESET' });
+				navigate('/');
+				break;
+			case 'ERROR_LOGIN':
+				setLoginCount(prevLoginCount => prevLoginCount + 1);
+				break;
+			default:
+				break;
 		}
-	}, [submitCount]);
+	}, [submitCount, formData.stateMessage]);
 
 	return (
 		<>
@@ -61,9 +67,12 @@ const LoginForm = () => {
 					value={formData.password}
 					onChange={handleChangeInput}
 				/>
-				{formData.state === 'ERROR' && <LoginMessage message={formData.stateMessage} />}
+				{formData.state === 'ERROR_VALIDATION' && <LoginMessage state={formData.stateMessage} />}
+				{formData.state === 'ERROR_SUBMIT' && (
+					<LoginMessage type='ERROR_SUBMIT' state={formData.stateMessage} count={loginCount} />
+				)}
 				<button
-					className='w-full h-10 mt-8 px-6 font-400 rounded-lg bg-black text-white'
+					className='w-full h-10 mt-12 px-6 font-400 rounded-lg bg-black text-white'
 					type='submit'
 				>
 					로그인

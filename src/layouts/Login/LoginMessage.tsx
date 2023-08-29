@@ -1,6 +1,7 @@
 interface LoginMessage {
 	type?: string;
-	message: string;
+	state: string;
+	count?: number;
 }
 
 const IconError = () => {
@@ -21,12 +22,24 @@ const IconError = () => {
 	);
 };
 
-const LoginMessage = ({ type = 'ERROR', message }: LoginMessage) => {
-	const textColor = type === 'ERROR' ? 'text-red-600' : 'text-blue-600';
+const message: { [key: string]: string } = {
+	EMPTY_EMAIL: '이메일을 입력해 주세요.',
+	EMPTY_PASSWORD: '비밀번호를 입력해 주세요.',
+	ERROR_EMAIL: '이메일 형식에 맞게 입력해 주세요.',
+	ERROR_LOGIN: '5회 이상 로그인 오류 시 보안을 위해 로그인이 제한됩니다.',
+	SUCCESS_LOGIN: '',
+};
+
+const LoginMessage = ({ type = 'ERROR_VALIDATION', state, count }: LoginMessage) => {
+	const textColor = type.includes('ERROR') ? 'text-red-600' : 'text-blue-600';
 	return (
-		<p className={`absolute bottom-12 pl-1 flex items-center gap-2 w-full ${textColor} text-xs`}>
-			{type === 'ERROR' && <IconError />}
-			{message}
+		<p
+			className={`absolute bottom-11 h-10 pl-1 flex items-center gap-2 w-full ${textColor} text-xs`}
+		>
+			{type.includes('ERROR') && <IconError />}
+			{count && `로그인 오류 ${count}회.`}
+			{type === 'ERROR_SUBMIT' && <br />}
+			{message[state]}
 		</p>
 	);
 };

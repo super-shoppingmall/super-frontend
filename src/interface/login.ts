@@ -1,4 +1,4 @@
-export type FormState = 'IDLE' | 'ERROR' | 'SUCCESS';
+export type FormState = 'IDLE' | 'ERROR_VALIDATION' | 'ERROR_SUBMIT' | 'SUCCESS';
 export type FormValidationField = 'EMAIL' | 'PASSWORD';
 
 export interface FormData {
