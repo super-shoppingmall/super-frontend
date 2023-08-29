@@ -1,8 +1,21 @@
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+
 import LoginForm from '../layouts/Login/LoginForm';
 import LoginInfoLinks from '../layouts/Login/LoginInfoLinks';
 import SocialLoginGroup from '../layouts/Login/SocialLoginGroup';
 
 const Login = () => {
+	const navigate = useNavigate();
+	const isLogin = useContext(AuthContext);
+
+	useEffect(() => {
+		if (isLogin) {
+			navigate('/');
+		}
+	}, []);
+
 	return (
 		<div className='min-w-min px-10'>
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm mb-8'>
