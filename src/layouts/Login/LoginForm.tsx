@@ -1,12 +1,14 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { formInitialData, loginFormReducer } from '../../reducers/loginReducer';
 import FormField from './FormField';
 import Spinner from '../../components/Spinner/Spinner';
 import LoginMessage from './LoginMessage';
+import { AuthContext } from '../../context/AuthContext';
 
 const LoginForm = () => {
+	const { login } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [formData, dispatchFormData] = useReducer(loginFormReducer, formInitialData);
@@ -38,6 +40,7 @@ const LoginForm = () => {
 
 		switch (formData.stateMessage) {
 			case 'SUCCESS_LOGIN':
+				login('ksdjkfjwojfojwoD12fjlsgjlL');
 				setLoginCount(1);
 				dispatchFormData({ type: 'FORM_RESET' });
 				navigate('/');

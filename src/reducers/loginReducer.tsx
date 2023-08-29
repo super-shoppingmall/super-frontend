@@ -63,6 +63,7 @@ function loginFormReducer(state: FormData, action: LoginFormAction): FormData {
 
 			// NOTE: API 추가 필요.
 			// return { ...state, state: 'ERROR_SUBMIT', stateMessage: 'ERROR_LOGIN' };
+
 			return { ...state, state: 'SUCCESS', stateMessage: 'SUCCESS_LOGIN' };
 		}
 		case 'FORM_RESET': {
