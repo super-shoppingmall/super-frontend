@@ -8,7 +8,7 @@ import SocialLoginGroup from '../layouts/Login/SocialLoginGroup';
 
 const Login = () => {
 	const navigate = useNavigate();
-	const isLogin = useContext(AuthContext);
+	const { isLogin } = useContext(AuthContext);
 
 	useEffect(() => {
 		if (isLogin) {

@@ -23,9 +23,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
 	useEffect(() => {
 		const tokenInStorage = localStorage.getItem('SUPER_TOKEN') || '';
-		console.log(tokenInStorage);
+
 		if (tokenInStorage.length > 0) {
 			setIsLogin(true);
+		} else {
+			setIsLogin(false);
 		}
 	}, []);
 
