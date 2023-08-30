@@ -26,7 +26,9 @@ function validForm(type: FormValidationField, value: FormData): FormData {
 			state: isEmailValid ? 'SUCCESS' : 'ERROR_VALIDATION',
 			stateMessage: 'ERROR_EMAIL',
 		};
-	} else {
+	}
+
+	if (type === 'PASSWORD') {
 		const passwordRegex =
 			/^((?=.*[\d])(?=.*[a-z])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[a-z])(?=.*[^\w\d\s])).{8,30}$/gm;
 		const isPasswordEmpty = value.password.length <= 0;
@@ -46,6 +48,8 @@ function validForm(type: FormValidationField, value: FormData): FormData {
 			stateMessage: 'ERROR_LOGIN',
 		};
 	}
+
+	return { ...value, state: 'ERROR_SUBMIT', stateMessage: 'ERROR_LOGIN' };
 }
 
 function loginFormReducer(state: FormData, action: LoginFormAction): FormData {
