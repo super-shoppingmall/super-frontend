@@ -1,8 +1,21 @@
-import Input from '../components/Input/Input';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+
+import LoginForm from '../layouts/Login/LoginForm';
 import LoginInfoLinks from '../layouts/Login/LoginInfoLinks';
 import SocialLoginGroup from '../layouts/Login/SocialLoginGroup';
 
 const Login = () => {
+	const navigate = useNavigate();
+	const isLogin = useContext(AuthContext);
+
+	useEffect(() => {
+		if (isLogin) {
+			navigate('/');
+		}
+	}, []);
+
 	return (
 		<div className='min-w-min px-10'>
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm mb-8'>
@@ -15,40 +28,18 @@ const Login = () => {
 				</p>
 			</div>
 
-			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm space-y-4'>
-				<section>
-					<form className='space-y-4'>
-						<Input
-							id='id'
-							label='아이디 입력'
-							onChange={() => {
-								console.log('ddd');
-							}}
-						/>
-						<Input
-							id='password'
-							type='password'
-							label='비밀번호 입력'
-							onChange={() => {
-								console.log('ddd');
-							}}
-						/>
-						<button
-							className='w-full h-10 px-6 font-400 rounded-lg bg-black text-white'
-							type='submit'
-						>
-							로그인
-						</button>
-					</form>
+			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm'>
+				<section className='mt-4'>
+					<LoginForm />
 				</section>
-				<section>
+				<section className='mt-4'>
 					<LoginInfoLinks />
 				</section>
-				<section>
+				<section className='mt-14'>
 					<h3 className='flex items-center mb-4'>
-						<div className='flex-grow bg bg-gray-300 h-px'></div>
+						<div className='flex-grow bg bg-gray-300 h-[0.02em]'></div>
 						<div className='flex-grow-0 mx-5 text dark:text-white'>SNS 계정으로 로그인</div>
-						<div className='flex-grow bg bg-gray-300 h-px'></div>
+						<div className='flex-grow bg bg-gray-300 h-[0.02em]'></div>
 					</h3>
 					<SocialLoginGroup />
 				</section>
