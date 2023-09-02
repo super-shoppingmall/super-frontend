@@ -6,11 +6,16 @@
 
 ### env파일
 
+- `.env.local`파일 생성 후 추가해주세요
+- 로그인의 경우 테스트가 불가합니다. 테스트를 원하실 경우 `김예슬`에게 문의 부탁드립니다.
+
 ```
-REACT_APP_API_URL= //백엔드 API 주소
-REACT_APP_NAVER_CLIENT_ID= // 네이버로 로그인하기
-REACT_APP_NAVER_CLIENT_SECRET= // 네이버로 로그인하기
-REACT_APP_NAVER_CALLBACK_URL= // 네이버로 로그인하기
+REACT_APP_API_URL=
+REACT_APP_OAUTH_CALLBACK_URL=http://localhost:3000/login
+
+REACT_APP_NAVER_CLIENT_ID=
+REACT_APP_NAVER_CLIENT_SECRET=
+REACT_APP_KAKAO_CLIENT_ID=
 ```
 
 #### 사용 기술 스택
