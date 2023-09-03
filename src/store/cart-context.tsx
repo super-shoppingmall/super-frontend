@@ -1,40 +1,24 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
+import Item from '../interface/item';
 
 interface Props {
 	children: React.ReactNode;
-}
-
-class Item {
-	product_id: string;
-	product_name: string;
-	product_price: number;
-	product_quantity: number;
-	product_images: string[];
-
-	constructor(id: string, name: string, price: number, quantity: number, images: string[]) {
-		this.product_id = id;
-		this.product_name = name;
-		this.product_price = price;
-		this.product_quantity = quantity;
-		this.product_images = images;
-	}
 }
 
 type ItemsContextObj = {
 	items: Item[];
 	addItem: (id: string, name: string, price: number, quantity: number, images: string[]) => void;
 	removeItem: (id: string) => void;
-	decreaseItem: (id: string) => void;
+	decreaseItem: (id: string, quantity: number) => void;
 	increaseItem: (id: string) => void;
 };
 
 export const CartContext = React.createContext<ItemsContextObj>({
 	items: [],
 	addItem: () => {},
-	removeItem: (id: string) => {},
-	decreaseItem: (id: string) => {},
-	increaseItem: (id: string) => {},
+	removeItem: () => {},
+	decreaseItem: () => {},
+	increaseItem: () => {},
 });
 
 const CartContextProvider: React.FC<Props> = ({ children }) => {
@@ -77,18 +61,19 @@ const CartContextProvider: React.FC<Props> = ({ children }) => {
 		});
 	};
 
-	const decreaseQuantityByOne = (itemId: string) => {
+	const decreaseQuantityByOne = (itemId: string, itemQty: number) => {
 		const newItems: Item[] = [];
-		items.map(item => {
-			if (item.product_id === itemId) {
-				if (item.product_quantity === 1) {
-					return;
+		if (itemQty > 1) {
+			items.map(item => {
+				if (item.product_id === itemId) {
+					return newItems.push({ ...item, product_quantity: item.product_quantity - 1 });
 				}
-				return newItems.push({ ...item, product_quantity: item.product_quantity - 1 });
-			}
-			return newItems.push(item);
-		});
-		setItems(newItems);
+				return newItems.push(item);
+			});
+			setItems(newItems);
+		} else {
+			return setItems(items.filter(item => item.product_id !== itemId));
+		}
 	};
 
 	const increaseQuantityByOne = (itemId: string) => {
