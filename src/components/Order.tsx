@@ -4,22 +4,7 @@ import { CartContext } from '../store/cart-context';
 import PointRefill from './Button/PointRefill';
 import CartItem from './ShoppingCart/CartItem';
 import ShoppingCartTotal from './ShoppingCart/ShoppingCartTotal';
-
-class Item {
-	product_id: string;
-	product_name: string;
-	product_price: number;
-	product_quantity: number;
-	product_images: string[];
-
-	constructor(id: string, name: string, price: number, quantity: number, images: string[]) {
-		this.product_id = id;
-		this.product_name = name;
-		this.product_price = price;
-		this.product_quantity = quantity;
-		this.product_images = images;
-	}
-}
+import Item from '../interface/item';
 
 const Order: React.FC = () => {
 	const navigate = useNavigate();
@@ -152,7 +137,11 @@ const Order: React.FC = () => {
 								url={item.product_images[0]}
 								location='ORDER'
 								onRemoveItem={itemsCtx.removeItem.bind(null, item.product_id)}
-								onDecreaseItem={itemsCtx.decreaseItem.bind(null, item.product_id)}
+								onDecreaseItem={itemsCtx.decreaseItem.bind(
+									null,
+									item.product_id,
+									item.product_quantity
+								)}
 								onIncreaseItem={itemsCtx.increaseItem.bind(null, item.product_id)}
 							></CartItem>
 						))}
