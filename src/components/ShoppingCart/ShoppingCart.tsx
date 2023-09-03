@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext } from 'react';
 import CartItem from './CartItem';
 import { CartContext } from '../../store/cart-context';
 import { useNavigate } from 'react-router-dom';
-import Order from '../Order';
 import ShoppingCartTotal from './ShoppingCartTotal';
 
 class Item {
@@ -54,7 +52,11 @@ const ShoppingCart: React.FC = () => {
 							url={item.product_images[0]}
 							location='CART'
 							onRemoveItem={itemsCtx.removeItem.bind(null, item.product_id)}
-							onDecreaseItem={itemsCtx.decreaseItem.bind(null, item.product_id)}
+							onDecreaseItem={itemsCtx.decreaseItem.bind(
+								null,
+								item.product_id,
+								item.product_quantity
+							)}
 							onIncreaseItem={itemsCtx.increaseItem.bind(null, item.product_id)}
 						></CartItem>
 					))}
