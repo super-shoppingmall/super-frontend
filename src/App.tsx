@@ -19,7 +19,14 @@ const App: React.FC = () => {
 			<Route path='/signup' element={<Signup />} />
 			<Route path='/detail' element={<ProductDetail />} />
 			<Route path='/register' element={<ProductRegister />} />
-			<Route path='/profile' element={<Profile />} />
+			<Route
+				path='/profile'
+				element={
+					<CartContextProvider>
+						<Profile />
+					</CartContextProvider>
+				}
+			></Route>
 			<Route
 				path='/cart'
 				element={
