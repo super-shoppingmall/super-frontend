@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import CartContextProvider from './context/cart-context';
+
 import Main from './components/Main';
 import Order from './components/Order';
 import ProductDetail from './components/ProductDetail';
@@ -7,11 +9,11 @@ import ProductRegister from './components/ProductRegister';
 import Profile from './components/Profile';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import CartContextProvider from './store/cart-context';
 import MobileAuthForm from './layouts/Signup/MobileAuthForm';
 import SignupForm from './layouts/Signup/SignupForm';
+
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 const App: React.FC = () => {
 	return (
@@ -24,7 +26,14 @@ const App: React.FC = () => {
 			</Route>
 			<Route path='/detail' element={<ProductDetail />} />
 			<Route path='/register' element={<ProductRegister />} />
-			<Route path='/profile' element={<Profile />} />
+			<Route
+				path='/profile'
+				element={
+					<CartContextProvider>
+						<Profile />
+					</CartContextProvider>
+				}
+			></Route>
 			<Route
 				path='/cart'
 				element={
