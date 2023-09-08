@@ -12,13 +12,10 @@ const SignupForm = () => {
 					<input
 						type='email'
 						id='email'
-						className='block w-80 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus:outline-none'
+						className='w-80 input-text'
 						placeholder='example@example.com'
 					/>
-					<button
-						type='button'
-						className='absolute top-0 right-0 w-20 h-full text-sm bg-black text-white text-center rounded-sm'
-					>
+					<button type='button' className='btn-form-sm'>
 						중복확인
 					</button>
 				</InputField>
@@ -26,7 +23,7 @@ const SignupForm = () => {
 					<input
 						type='password'
 						id='password'
-						className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus:outline-none'
+						className='flex-1 input-text'
 						placeholder='영문/숫자/특수문자 혼합8~30자'
 					/>
 				</InputField>
@@ -34,31 +31,19 @@ const SignupForm = () => {
 					<input
 						type='password'
 						id='password_check'
-						className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus:outline-none'
+						className='flex-1 input-text'
 						placeholder='비밀번호를 한번 더 입력해주세요!'
 					/>
 				</InputField>
 				<InputField theme='SECONDARY' id='address' label='주소'>
-					<input
-						type='text'
-						id='address'
-						className='block w-80 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus:outline-none'
-					/>
-					<button
-						type='button'
-						className='absolute top-0 right-0 w-20 h-full text-sm bg-black text-white text-center rounded-sm'
-					>
+					<input type='text' id='address' className='w-80 input-text' />
+					<button type='button' className='btn-form-sm'>
 						검색
 					</button>
 				</InputField>
 
 				<div className='flex rounded-sm mt-2 shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md py-1 px-2'>
-					<input
-						placeholder='주소입력'
-						type='text'
-						className='block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 focus:outline-none cursor-pointer'
-						onClick={() => {}}
-					/>
+					<input type='text' className='flex-1 input-text' onClick={() => {}} />
 				</div>
 				<div className='col-span-full mt-3'>
 					<label htmlFor='photo' className='text-sm'>
@@ -82,10 +67,7 @@ const SignupForm = () => {
 					</div>
 				</div>
 				{/* NOTE: 시간 남으면 약관 추가 */}
-				<button
-					className='w-full h-10 mt-6 px-6 font-400 rounded-sm bg-black text-white'
-					type='submit'
-				>
+				<button className='btn-form-lg' type='submit'>
 					가입하기
 				</button>
 			</form>
