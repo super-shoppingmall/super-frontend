@@ -9,7 +9,7 @@ import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import Signup from './components/Signup';
 
 import Login from './pages/Login';
-import CartContextProvider from './store/cart-context';
+import CartContextProvider from './context/cart-context';
 
 const App: React.FC = () => {
 	return (
