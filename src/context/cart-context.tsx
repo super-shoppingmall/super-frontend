@@ -11,6 +11,8 @@ type ItemsContextObj = {
 	removeItem: (id: string) => void;
 	decreaseItem: (id: string, quantity: number) => void;
 	increaseItem: (id: string) => void;
+	totalAmount: number;
+	totalQty: number;
 };
 
 export const CartContext = React.createContext<ItemsContextObj>({
@@ -19,6 +21,8 @@ export const CartContext = React.createContext<ItemsContextObj>({
 	removeItem: () => {},
 	decreaseItem: () => {},
 	increaseItem: () => {},
+	totalAmount: 0,
+	totalQty: 0,
 });
 
 const CartContextProvider: React.FC<Props> = ({ children }) => {
@@ -42,6 +46,7 @@ const CartContextProvider: React.FC<Props> = ({ children }) => {
 			],
 		},
 	]);
+
 	const addItemHandler = (
 		id: string,
 		name: string,
@@ -93,9 +98,13 @@ const CartContextProvider: React.FC<Props> = ({ children }) => {
 		removeItem: removeItemHandler,
 		decreaseItem: decreaseQuantityByOne,
 		increaseItem: increaseQuantityByOne,
+		totalAmount: items.reduce((total: number, item: Item) => {
+			return total + item.product_price * item.product_quantity;
+		}, 0),
+		totalQty: items.reduce((total: number, item: Item) => {
+			return total + item.product_quantity;
+		}, 0),
 	};
-
-	console.log(items);
 
 	return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 };

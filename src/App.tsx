@@ -9,9 +9,9 @@ import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import CartContextProvider from './store/cart-context';
 import MobileAuthForm from './layouts/Signup/MobileAuthForm';
 import SignupForm from './layouts/Signup/SignupForm';
+import CartContextProvider from './context/cart-context';
 
 const App: React.FC = () => {
 	return (
@@ -24,7 +24,14 @@ const App: React.FC = () => {
 			</Route>
 			<Route path='/detail' element={<ProductDetail />} />
 			<Route path='/register' element={<ProductRegister />} />
-			<Route path='/profile' element={<Profile />} />
+			<Route
+				path='/profile'
+				element={
+					<CartContextProvider>
+						<Profile />
+					</CartContextProvider>
+				}
+			></Route>
 			<Route
 				path='/cart'
 				element={
