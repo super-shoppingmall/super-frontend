@@ -9,7 +9,7 @@ import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import Signup from './components/Signup';
 
 import Login from './pages/Login';
-
+import ProductList from './components/List/ProductList';
 const App: React.FC = () => {
 	return (
 		<Routes>
@@ -20,6 +20,8 @@ const App: React.FC = () => {
 			<Route path='/register' element={<ProductRegister />} />
 			<Route path='/profile' element={<Profile />} />
 			<Route path='/cart' element={<ShoppingCart />} />
+			<Route path='/productlist' element={<ProductList />} />
+			<Route path='/productdetail' element={<ProductDetail />} />
 		</Routes>
 	);
 };
