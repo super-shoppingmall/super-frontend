@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../store/cart-context';
+import { CartContext } from '../context/cart-context';
 import PointRefill from './Button/PointRefill';
 import CartItem from './ShoppingCart/CartItem';
 import ShoppingCartTotal from './ShoppingCart/ShoppingCartTotal';
@@ -150,7 +150,7 @@ const Order: React.FC = () => {
 				</div>
 				<div className='font-bold text-lg my-8'>결제 정보</div>
 				<div className='border border-black mb-12'>
-					<div className='my-4 mx-8 flex flex-row text-base justify-between items-center'>
+					<div className='my-4 mx-8 flex flex-row text-base justify-between items-center h-12'>
 						<div className='flex gap-4'>
 							<input id='superPaySelector' type='radio' />
 							<label htmlFor='superPaySelector'>슈퍼페이</label>

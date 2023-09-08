@@ -1,30 +1,11 @@
 import React, { useContext } from 'react';
 import CartItem from './CartItem';
-import { CartContext } from '../../store/cart-context';
+import { CartContext } from '../../context/cart-context';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartTotal from './ShoppingCartTotal';
 
-class Item {
-	product_id: string;
-	product_name: string;
-	product_price: number;
-	product_quantity: number;
-	product_images: string[];
-
-	constructor(id: string, name: string, price: number, quantity: number, images: string[]) {
-		this.product_id = id;
-		this.product_name = name;
-		this.product_price = price;
-		this.product_quantity = quantity;
-		this.product_images = images;
-	}
-}
-
 const ShoppingCart: React.FC = () => {
 	const itemsCtx = useContext(CartContext);
-	const totalAmount = itemsCtx.items.reduce((total: number, item: Item) => {
-		return total + item.product_price * item.product_quantity;
-	}, 0);
 
 	const navigate = useNavigate();
 	const goToOrder = () => {
@@ -65,7 +46,11 @@ const ShoppingCart: React.FC = () => {
 			{/* 주문상세 */}
 			<div className='flex-initial flex-col h-screen p-8 flex items-start'>
 				<div className='font-bold text-lg mb-16'>주문상세</div>
-				<ShoppingCartTotal totalAmount={totalAmount} isCart={true} totalQty={0} />
+				<ShoppingCartTotal
+					totalAmount={itemsCtx.totalAmount}
+					isCart={true}
+					totalQty={itemsCtx.totalQty}
+				/>
 
 				<button className='w-full bg-black h-12 text-white font-bold mb-8' onClick={goToOrder}>
 					결제하기
