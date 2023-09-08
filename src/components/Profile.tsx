@@ -1,7 +1,9 @@
 import { useContext } from 'react';
-import { CartContext } from '../store/cart-context';
+import { CartContext } from '../context/cart-context';
 import CartItem from './ShoppingCart/CartItem';
 import ShoppingCartTotal from './ShoppingCart/ShoppingCartTotal';
+import PointRefill from './Button/PointRefill';
+
 const Profile = () => {
 	const itemsCtx = useContext(CartContext);
 
@@ -16,6 +18,7 @@ const Profile = () => {
 				>
 					<img
 						className='scale-150'
+						style={{ zIndex: '-1' }}
 						src='https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDRfMTgy/MDAxNjEyNDA5MDAwMTQ5.xAL2IL0PLx1GEkteQW9hO0VQQ5hp6G_KW51CDSesCOIg.ptpcPrdvUq9uhozgN0_nUHssItIl3BhLOqabQuy1A8gg.JPEG.sunny_side_up12/1612312679152%EF%BC%8D3.jpg?type=w800'
 					/>
 				</div>
@@ -33,18 +36,15 @@ const Profile = () => {
 					</div>
 				</div>
 				<div
-					className='border border-black flex flex-col justify-center items-center gap-6 px-8'
+					className='border border-gray-400 flex flex-col justify-center items-center gap-6 px-8'
 					style={{ width: '30%' }}
 				>
-					<div
-						className='flex flex-row items-center self-start gap-12 '
-						// style={{ placeSelf: 'normal' }}
-					>
-						<div className='text-sm text-gray-600'>페이머니 잔액</div>
+					<div className='flex flex-row items-center self-start gap-12'>
+						<div className='text-xs text-gray-600'>페이머니 잔액</div>
 						<div className='text-base'>1,000,000원</div>
 					</div>
-					<div className='bg-black w-full h-1/3 flex justify-center items-center'>
-						<div className='text-white text-sm'>페이머니 충전하기</div>
+					<div className='w-full text-center'>
+						<PointRefill />
 					</div>
 				</div>
 			</div>
@@ -55,7 +55,6 @@ const Profile = () => {
 			<div className='text-base font-bold mt-4'>
 				장바구니<span className='font-normal text-sm'> (총수량: {itemsCtx.totalQty}개)</span>
 			</div>
-			{/* <div className='grid grid-cols-5 gap-4 py-6'> */}
 			<ul className='w-1/2 text-sm'>
 				{itemsCtx.items.map(item => (
 					<CartItem
@@ -82,7 +81,6 @@ const Profile = () => {
 					totalQty={itemsCtx.totalQty}
 				/>
 			</ul>
-			{/* </div> */}
 		</div>
 	);
 };
