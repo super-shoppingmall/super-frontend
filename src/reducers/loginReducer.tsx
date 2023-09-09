@@ -1,82 +1,73 @@
-import { FormData, FormValidationField, LoginFormAction } from '../interface/login';
+import { FormState } from '../components/Form/FormMessage';
+import validate from '../util/validate';
 
-const formInitialData: FormData = {
-	state: 'IDLE',
-	stateMessage: '',
-	email: '',
-	password: '',
-};
-
-function validForm(type: FormValidationField, value: FormData): FormData {
-	if (type === 'EMAIL') {
-		const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-		const isEmailEmpty = value.email.length <= 0;
-		const isEmailValid = emailRegex.test(value.email);
-
-		if (isEmailEmpty) {
-			return {
-				...value,
-				state: 'ERROR_VALIDATION',
-				stateMessage: 'EMPTY_EMAIL',
-			};
-		}
-
-		return {
-			...value,
-			state: isEmailValid ? 'SUCCESS' : 'ERROR_VALIDATION',
-			stateMessage: 'ERROR_EMAIL',
-		};
-	}
-
-	if (type === 'PASSWORD') {
-		const passwordRegex =
-			/^((?=.*[\d])(?=.*[a-z])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[a-z])(?=.*[^\w\d\s])).{8,30}$/gm;
-		const isPasswordEmpty = value.password.length <= 0;
-		const isPasswordValid = passwordRegex.test(value.password);
-
-		if (isPasswordEmpty) {
-			return {
-				...value,
-				state: 'ERROR_VALIDATION',
-				stateMessage: 'EMPTY_PASSWORD',
-			};
-		}
-
-		return {
-			...value,
-			state: isPasswordValid ? 'SUCCESS' : 'ERROR_SUBMIT',
-			stateMessage: 'ERROR_LOGIN',
-		};
-	}
-
-	return { ...value, state: 'ERROR_SUBMIT', stateMessage: 'ERROR_LOGIN' };
+export interface FormData {
+	formState: FormState[];
+	email: string;
+	password: string;
+	token: string;
 }
 
-function loginFormReducer(state: FormData, action: LoginFormAction): FormData {
+export interface LoginAction {
+	type: 'SET_FIELD' | 'VALID_FIELD' | 'SUBMIT_FORM';
+	value?: FormData;
+}
+
+function validForm(state: FormData): FormData {
+	const errorMessages: FormState[] = [];
+	const isEmailFilledIn = validate.textFieldNotEmpty(state.email);
+	const isEmailValid = validate.textFieldFormat('EMAIL', state.email);
+	const isPasswordFilledIn = validate.textFieldNotEmpty(state.password);
+
+	if (!isEmailFilledIn && !isEmailValid) {
+		errorMessages.push('ERROR_EMAIL_EMPTY');
+	}
+
+	if (isEmailFilledIn && !isEmailValid) {
+		errorMessages.push('ERROR_EMAIL');
+	}
+
+	if (!isPasswordFilledIn) {
+		errorMessages.push('ERROR_PASSWORD_EMPTY');
+	}
+
+	if (errorMessages.length > 0) {
+		return {
+			...state,
+			formState: [errorMessages[0]],
+		};
+	}
+
+	return {
+		...state,
+		formState: [],
+	};
+}
+
+function loginReducer(state: FormData, action: LoginAction): FormData {
 	switch (action.type) {
-		case 'FORM_CHANGE': {
+		case 'SET_FIELD':
 			if (!action.value) return state;
 			return action.value;
-		}
-		case 'FORM_SUBMIT': {
-			const email = validForm('EMAIL', state);
-			if (email.state === 'ERROR_VALIDATION') return email;
 
-			const password = validForm('PASSWORD', state);
-			if (password.state === 'ERROR_SUBMIT') return password;
-
-			// NOTE: API 추가 필요.
-			// return { ...state, state: 'ERROR_SUBMIT', stateMessage: 'ERROR_LOGIN' };
-
-			return { ...state, state: 'SUCCESS', stateMessage: 'SUCCESS_LOGIN' };
+		case 'VALID_FIELD': {
+			const validationResult = validForm(state);
+			return validationResult;
 		}
-		case 'FORM_RESET': {
-			return formInitialData;
-		}
-		default: {
-			return state;
+
+		case 'SUBMIT_FORM': {
+			// return {
+			// 	...state,
+			// 	formState: ['ERROR_LOGIN'],
+			// };
+			// API 추가
+			return {
+				...state,
+				token: 'khsdfksdhfkshkhfk',
+				formState: ['SUCCESS'],
+			};
 		}
 	}
 }
 
-export { formInitialData, loginFormReducer };
+export default loginReducer;
