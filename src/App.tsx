@@ -11,6 +11,7 @@ import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 import MobileAuthForm from './layouts/Signup/MobileAuthForm';
 import SignupForm from './layouts/Signup/SignupForm';
+import CartContextProvider from './context/cart-context';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
