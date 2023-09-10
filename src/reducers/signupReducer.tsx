@@ -1,15 +1,8 @@
-import { validateTextField } from '../util/validate';
-
-export type SignupState =
-	| ''
-	| 'ERROR_EMAIL'
-	| 'ERROR_EMAIL_UNIQUE'
-	| 'ERROR_PASSWORD'
-	| 'ERROR_PASSWORD_CONFIRM'
-	| 'SUCCESS';
+import { FormState } from '../components/Form/FormMessage';
+import validate from '../util/validate';
 
 export interface FormData {
-	formState: SignupState[];
+	formState: FormState[];
 	email: string;
 	password: string;
 	address: string;
@@ -22,9 +15,9 @@ export interface SignupAction {
 }
 
 const validForm = (state: FormData): FormData => {
-	const errorMessages: SignupState[] = [];
-	const isEmailValid = validateTextField('EMAIL', state.email);
-	const isPasswordValid = validateTextField('PASSWORD', state.password);
+	const errorMessages: FormState[] = [];
+	const isEmailValid = validate.textFieldFormat('EMAIL', state.email);
+	const isPasswordValid = validate.textFieldFormat('PASSWORD', state.password);
 
 	if (!isEmailValid) {
 		errorMessages.push('ERROR_EMAIL');

@@ -9,9 +9,17 @@ const getRegExp = (type: FormTextField) => {
 	}
 };
 
-export const validateTextField = (type: FormTextField, field: string) => {
+const textFieldFormat = (type: FormTextField, field: string) => {
 	const regexp = getRegExp(type);
-	const isFieldEmpty = field.length <= 0;
 	const isFieldValid = regexp.test(field);
-	return !isFieldEmpty && isFieldValid;
+	return isFieldValid;
+};
+
+const textFieldNotEmpty = (field: string) => {
+	return field.length > 0;
+};
+
+export default {
+	textFieldFormat,
+	textFieldNotEmpty,
 };
