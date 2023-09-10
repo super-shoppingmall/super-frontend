@@ -1,22 +1,96 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
 import { Link } from 'react-router-dom';
+
+import { AuthContext } from '../../context/AuthContext';
+
+import Logo from '../../assets/logo.png';
 
 const Header = () => {
 	const { isLogin, logout } = useContext(AuthContext);
 
+	const gnbLists = [
+		{
+			link: '/',
+			name: '사료',
+		},
+		{
+			link: '/',
+			name: '간식',
+		},
+		{
+			link: '/',
+			name: '전체용품',
+		},
+		{
+			link: '/',
+			name: '건강식품',
+		},
+	];
+
 	return (
-		<header className='flex'>
-			<h2 className='font-extrabold mr-2'>임시헤더</h2>
-			{isLogin ? (
-				<button type='button' onClick={logout} className='bg-red-300'>
-					로그아웃
-				</button>
-			) : (
-				<Link to='/login' className='bg-red-300'>
-					로그인
-				</Link>
-			)}
+		<header>
+			<div className='max-w-[1200px] mx-auto'>
+				<nav className='bg-white border-gray-200 px-6 py-2.5 dark:bg-gray-800'>
+					<div className='flex justify-between items-center mx-auto max-w-screen-xl'>
+						<Link to='https://flowbite.com' className='flex items-center'>
+							<img src={Logo} alt='슈퍼 펫' className='w-8 mr-2' />
+							<span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
+								SUPER PET
+							</span>
+						</Link>
+						<div className='flex items-center order-2'>
+							{isLogin ? (
+								<ul className='flex font-medium text-sm'>
+									<li>
+										<span className='user-list'>
+											<span className='font-semibold'>ooo님!</span> 환영합니다.
+										</span>
+									</li>
+									<li>
+										<Link to='/cart' className='user-list'>
+											장바구니
+										</Link>
+									</li>
+									<li>
+										<button type='button' className='user-list' onClick={logout}>
+											로그아웃
+										</button>
+									</li>
+								</ul>
+							) : (
+								<ul className='flex font-medium text-sm'>
+									<li>
+										<Link to='/cart' className='user-list'>
+											장바구니
+										</Link>
+									</li>
+									<li>
+										<Link to='/login' className='user-list'>
+											로그인
+										</Link>
+									</li>
+									<li>
+										<Link to='/signup' className='user-list text-blue-600'>
+											회원가입
+										</Link>
+									</li>
+								</ul>
+							)}
+						</div>
+						<div>
+							<ul className='flex font-medium space-x-8'>
+								{gnbLists.map(gnbList => (
+									<li key={gnbList.name}>
+										<Link to={gnbList.link} className='gnb-list'>
+											{gnbList.name}
+										</Link>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
 		</header>
 	);
 };
