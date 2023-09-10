@@ -8,11 +8,12 @@ import Profile from './components/Profile';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 import Login from './pages/Login';
+
+import ProductList from './components/List/ProductList';
 import Signup from './pages/Signup';
 import MobileAuthForm from './layouts/Signup/MobileAuthForm';
 import SignupForm from './layouts/Signup/SignupForm';
 import CartContextProvider from './context/cart-context';
-
 const App: React.FC = () => {
 	return (
 		<Routes>
@@ -24,6 +25,8 @@ const App: React.FC = () => {
 			</Route>
 			<Route path='/detail' element={<ProductDetail />} />
 			<Route path='/register' element={<ProductRegister />} />
+			<Route path='/productlist' element={<ProductList />} />
+			<Route path='/productdetail' element={<ProductDetail />} />
 			<Route
 				path='/profile'
 				element={
