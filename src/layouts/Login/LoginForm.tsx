@@ -2,7 +2,7 @@ import { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { formInitialData, loginFormReducer } from '../../reducers/loginReducer';
-import FormField from './FormField';
+import FormField from '../../components/Form/FormField';
 import Spinner from '../../components/Spinner/Spinner';
 import LoginMessage from './LoginMessage';
 import { AuthContext } from '../../context/AuthContext';
