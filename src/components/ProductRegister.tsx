@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { ChangeEvent, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 const ProductRegister = () => {
@@ -11,29 +13,40 @@ const ProductRegister = () => {
 	const [productInfo, setProductInfo] = useState<string>('');
 	const [productImg, setProductImg] = useState<File[]>([]);
 	const [startDate, setStartDate] = useState<string>('');
-	const [endDate, setEndDate] = useState<string>('');
+	const [closingAt, setclosingAt] = useState<string>('');
 
+	//이미지 추가 handler
+	const handleProductImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files) {
+			const files = Array.from(e.target.files);
+			if (files.length + productImg.length > 5) {
+				alert('최대 5개까지만 등록할 수 있습니다.');
+				return;
+			}
+			setProductImg(prevState => [...prevState, ...files]);
+		}
+	};
 	//노출일자 변경 시 유효성 체크
-	const handleStartDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleStartDateChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const selectedStartDate = e.target.value;
-		if (selectedStartDate < endDate || endDate == '') {
+		if (selectedStartDate < closingAt || closingAt == '') {
 			setStartDate(e.target.value);
 			return;
 		}
 		alert('시작일은 종료일 이후일 수 없습니다.');
 	};
 
-	const handleEndDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const selectedEndDate = e.target.value;
-		if (startDate < selectedEndDate || startDate == '') {
-			setEndDate(e.target.value);
+	const handleclosingAtChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const selectedclosingAt = e.target.value;
+		if (startDate < selectedclosingAt || startDate == '') {
+			setclosingAt(e.target.value);
 			return;
 		}
 		alert('종료일은 시작일 이전일 수 없습니다.');
 	};
 
 	const dateCheck = () => {
-		if (startDate == '' || endDate == '') {
+		if (startDate == '' || closingAt == '') {
 			alert('노출일자를 선택해주세요.');
 			return false;
 		}
@@ -73,11 +86,27 @@ const ProductRegister = () => {
 		return true;
 	};
 
-	const register = () => {
+	const register = async () => {
 		if (dataCheck()) {
-			//api 작성
-			alert('등록되었습니다.');
-			navigate('/productlist');
+			const url = 'http://3.34.114.250:8080/api+/products/sale/register';
+			const data = {
+				memberId: 'test@test.com',
+				productName: productName,
+				categoryName: productCategory,
+				productPrice: productPrice,
+				productQuantity: productCount,
+				productDetail: productInfo,
+				productImageFiles: productImg,
+				closingAt: closingAt,
+			};
+			try {
+				const response = await axios.post(url, data);
+				console.log(response.data);
+				alert('등록되었습니다.');
+				navigate('/productlist');
+			} catch (error) {
+				console.error(`Error occurred: ${error}`);
+			}
 		}
 	};
 
@@ -117,9 +146,7 @@ const ProductRegister = () => {
 												setProductCategory(e.target.value);
 											}}
 										>
-											<option value='' selected>
-												카테고리를 선택하세요
-											</option>
+											<option value=''>카테고리를 선택하세요</option>
 											<option value='사료'>사료</option>
 											<option value='간식'>간식</option>
 											<option value='용품'>용품</option>
@@ -178,12 +205,25 @@ const ProductRegister = () => {
 										이미지 등록
 									</th>
 									<td className='px-6 w-48'>
-										<input
+										{/* <input
 											type='file'
 											onChange={e => {
 												setProductImg(Array.from(e.target.files || []));
 											}}
-										/>
+										/> */}
+										{Array.from({ length: 5 }).map((_, index) => (
+											<div key={index}>
+												<label className='file-label' htmlFor={`chooseFile${index}`}>
+													첨부파일 {index + 1}
+												</label>
+												<input
+													className='file'
+													id={`chooseFile${index}`}
+													type='file'
+													onChange={handleProductImgChange}
+												/>
+											</div>
+										))}
 									</td>
 								</tr>
 								<tr className='border'>
@@ -202,7 +242,7 @@ const ProductRegister = () => {
 										</div>*/}
 											<input type='date' value={startDate} onChange={handleStartDateChange} />
 											<div> ~ </div>
-											<input type='date' value={endDate} onChange={handleEndDateChange} />
+											<input type='date' value={closingAt} onChange={handleclosingAtChange} />
 										</div>
 									</td>
 								</tr>
