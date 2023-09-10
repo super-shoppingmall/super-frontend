@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import SignupForm from '../layouts/Signup/SignupForm';
 
 const Signup = () => {
 	return (
@@ -10,7 +10,7 @@ const Signup = () => {
 			</div>
 			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm'>
 				<section className='mt-4'>
-					<Outlet />
+					<SignupForm />
 				</section>
 			</article>
 		</div>

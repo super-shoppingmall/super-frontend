@@ -1,33 +1,31 @@
 import { useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import InputField from '../../components/Form/InputField';
-import signupReducer, { FormData } from '../../reducers/signupReducer';
+import signupReducer, { FormData, FormTextField } from '../../reducers/signupReducer';
 import FormMessage from '../../components/Form/FormMessage';
 
 const initialData: FormData = {
 	formState: [],
 	email: '',
 	password: '',
+	passwordConfirm: '',
+	passwordValid: null,
+	phone: '',
+	gender: '',
 	address: '',
-	profile: '',
+	profileImage: '',
+	aboutMe: '',
 };
 
 const SignupForm = () => {
 	const [formData, dispatchFormData] = useReducer(signupReducer, initialData);
-	const [passwordConfirm, setPasswordConfirm] = useState('');
-
 	const [isEmailUnique, setIsEmailUnique] = useState<boolean | null>(null);
-	const [isPasswordSame, setIsPasswordSame] = useState(formData.password === passwordConfirm);
 
 	const formState = formData.formState;
 
 	const handleEmailUnique = () => {
 		// NOTE: API 추가 필요
 		setIsEmailUnique(true);
-	};
-
-	const handlePasswordIsSame = () => {
-		setIsPasswordSame(formData.password === passwordConfirm);
 	};
 
 	const addInputField = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,18 +38,18 @@ const SignupForm = () => {
 		});
 	};
 
-	const validateInputField = () => {
-		dispatchFormData({ type: 'VALID_FIELD' });
+	const validateInputField = (fieldType: FormTextField) => {
+		dispatchFormData({ type: 'VALID_SINGLE_FIELD', fieldType: fieldType });
 	};
 
 	const validateForm = () => {
-		validateInputField();
+		dispatchFormData({ type: 'VALID_FIELD' });
 		if (typeof isEmailUnique !== 'boolean') setIsEmailUnique(false);
 	};
 
 	const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!isEmailUnique || !isPasswordSame || formState.length > 0) return;
+		if (!isEmailUnique || formState.length > 0) return;
 		dispatchFormData({ type: 'SUBMIT_FORM' });
 	};
 
@@ -77,7 +75,7 @@ const SignupForm = () => {
 							className='w-80 input-text'
 							placeholder='example@example.com'
 							onChange={addInputField}
-							onBlur={validateInputField}
+							onBlur={() => validateInputField('EMAIL')}
 						/>
 						<button type='button' className='btn-form-sm' onClick={handleEmailUnique}>
 							중복확인
@@ -87,6 +85,10 @@ const SignupForm = () => {
 						<FormMessage type='ERROR_EMAIL_UNIQUE' isValid={isEmailUnique} />
 					)}
 					<FormMessage type='ERROR_EMAIL' isValid={!formState.includes('ERROR_EMAIL')} />
+					<FormMessage
+						type='ERROR_EMAIL_EMPTY'
+						isValid={!formState.includes('ERROR_EMAIL_EMPTY')}
+					/>
 				</div>
 
 				{/* 비밀번호 */}
@@ -99,26 +101,59 @@ const SignupForm = () => {
 							className='flex-1 input-text'
 							placeholder='영문, 숫자, 특수문자 혼합 8 ~ 30자 비밀번호'
 							onChange={addInputField}
-							onBlur={validateInputField}
+							onBlur={() => validateInputField('PASSWORD')}
 						/>
 					</InputField>
 					<FormMessage type='ERROR_PASSWORD' isValid={!formState.includes('ERROR_PASSWORD')} />
+					<FormMessage
+						type='ERROR_PASSWORD_EMPTY'
+						isValid={!formState.includes('ERROR_PASSWORD_EMPTY')}
+					/>
 				</div>
 
 				{/* 비밀번호 확인 */}
 				<div>
-					<InputField theme='SECONDARY' id='password_check' label='비밀번호 확인' isRequired>
+					<InputField theme='SECONDARY' id='passwordConfirm' label='비밀번호 확인' isRequired>
 						<input
 							type='password'
-							id='password_check'
+							id='passwordConfirm'
+							name='passwordConfirm'
 							className='flex-1 input-text'
 							placeholder='비밀번호 확인'
-							value={passwordConfirm}
-							onChange={e => setPasswordConfirm(e.target.value)}
-							onBlur={handlePasswordIsSame}
+							onChange={addInputField}
+							onBlur={() => {
+								validateInputField('PWD_CONFIRM');
+							}}
 						/>
 					</InputField>
-					<FormMessage type='ERROR_PASSWORD_CONFIRM' isValid={isPasswordSame} />
+					<FormMessage
+						type='ERROR_PWD_CONFIRM'
+						isValid={!formState.includes('ERROR_PWD_CONFIRM')}
+					/>
+					<FormMessage
+						type='ERROR_PWD_CONFIRM_EMPTY'
+						isValid={!formState.includes('ERROR_PWD_CONFIRM_EMPTY')}
+					/>
+				</div>
+
+				{/* 핸드폰 번호 */}
+				<div>
+					<InputField theme='SECONDARY' id='phone' label='핸드폰 번호' isRequired>
+						<input
+							type='text'
+							id='phone'
+							name='phone'
+							className='flex-1 input-text'
+							placeholder="'-'를 제외한 숫자"
+							onChange={addInputField}
+							onBlur={() => validateInputField('PHONE')}
+						/>
+					</InputField>
+					<FormMessage type='ERROR_PHONE' isValid={!formState.includes('ERROR_PHONE')} />
+					<FormMessage
+						type='ERROR_PHONE_EMPTY'
+						isValid={!formState.includes('ERROR_PHONE_EMPTY')}
+					/>
 				</div>
 
 				{/* 주소 */}
@@ -163,6 +198,24 @@ const SignupForm = () => {
 						</label>
 					</div>
 				</div>
+
+				{/* 성별 */}
+				<div>
+					<InputField theme='SECONDARY' id='gender' label='성별'>
+						<select name='gender' id='gender' className='flex-1 input-text' onChange={() => {}}>
+							<option value='male'>남성</option>
+							<option value='female'>여성</option>
+						</select>
+					</InputField>
+				</div>
+
+				{/* 자기소개 */}
+				<div>
+					<InputField theme='SECONDARY' id='aboutMe' label='자기소개'>
+						<textarea name='aboutMe' id='aboutMe' className='w-full h-[160px]'></textarea>
+					</InputField>
+				</div>
+
 				{/* NOTE: 시간 남으면 약관 추가 */}
 				<button className='btn-form-lg' type='submit' onClick={validateForm}>
 					가입하기
