@@ -4,6 +4,7 @@ import CartContextProvider from './context/cart-context';
 
 import Main from './components/Main';
 import Order from './components/Order';
+import ProductList from './components/List/ProductList';
 import ProductDetail from './components/ProductDetail';
 import ProductRegister from './components/ProductRegister';
 import Profile from './components/Profile';
@@ -27,6 +28,8 @@ const App: React.FC = () => {
 			</Route>
 			<Route path='/detail' element={<ProductDetail />} />
 			<Route path='/register' element={<ProductRegister />} />
+			<Route path='/productlist' element={<ProductList />} />
+			<Route path='/productdetail' element={<ProductDetail />} />
 			<Route
 				path='/profile'
 				element={
