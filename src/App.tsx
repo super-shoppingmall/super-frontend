@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import CartContextProvider from './context/cart-context';
 
 import Main from './components/Main';
 import Order from './components/Order';
