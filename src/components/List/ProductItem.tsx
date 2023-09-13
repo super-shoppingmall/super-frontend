@@ -11,7 +11,7 @@ const ProductItem = ({ id, name, price, itemImg }: Item) => {
 	const navigete = useNavigate();
 
 	const pagemove = (param: number) => {
-		navigete(`/detail/:${param}`);
+		navigete(`/detail/${param}`);
 	};
 
 	return (

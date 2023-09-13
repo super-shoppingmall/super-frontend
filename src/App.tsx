@@ -16,6 +16,7 @@ import CartContextProvider from './context/cart-context';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Header from './components/Header/Header';
+import MyProductList from './components/List/MyProductList';
 const App: React.FC = () => {
 	return (
 		<>
@@ -30,6 +31,7 @@ const App: React.FC = () => {
 				<Route path='/detail/:productId' element={<ProductDetail />} />
 				<Route path='/register' element={<ProductRegister />} />
 				<Route path='/productlist/:pageName' element={<ProductList />} />
+				<Route path='/myproductlist' element={<MyProductList />} />
 				<Route
 					path='/profile'
 					element={

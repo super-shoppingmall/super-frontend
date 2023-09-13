@@ -9,7 +9,7 @@ type Item = {
 	itemImg: string;
 };
 
-const ItemList = () => {
+const MyProductList = () => {
 	const navigate = useNavigate();
 	const items: Array<Item> = [
 		{
@@ -131,4 +131,4 @@ const ItemList = () => {
 	);
 };
 
-export default ItemList;
+export default MyProductList;
