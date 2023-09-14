@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 import LoginForm from '../layouts/Login/LoginForm';
@@ -35,6 +35,15 @@ const Login = () => {
 				<section className='mt-4'>
 					<LoginInfoLinks />
 				</section>
+				<p className='my-4'>
+					<span className='block text-gray-400 text-xs text-center'>
+						혹시 판매자로 로그인을 원하시는 경우, <br />
+						<Link to='/login/member' className='underline'>
+							이곳
+						</Link>
+						을 클릭해 주세요.
+					</span>
+				</p>
 				<section className='mt-14'>
 					<h3 className='flex items-center mb-4'>
 						<div className='flex-grow bg bg-gray-300 h-[0.02em]'></div>
