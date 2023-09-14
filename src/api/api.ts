@@ -5,7 +5,7 @@ import axiosCustom from './axios';
 const addUserInfo = (token: string, email: string) => {
 	localStorage.setItem('SUPER_TOKEN', token);
 	localStorage.setItem('SUPER_ID', email.split('@')[0]);
-	window.location.href = '/';
+	location.href = '/';
 };
 
 export const AuthApi = {
@@ -18,20 +18,23 @@ export const AuthApi = {
 			window.location.href = '/login';
 		}
 	},
-	login: async (formData: LoginForm) => {
+	login: async (URL: string, formData: LoginForm) => {
 		try {
-			const response = await axiosCustom.post('/api/auth/login', JSON.stringify(formData));
+			const response = await axiosCustom.post(URL, JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
 			const data = await response.data;
+			console.log(data);
 			addUserInfo(data.token, data.username);
+			return 'SUCCESS';
 		} catch (error: unknown) {
 			return 'ERROR_LOGIN';
 		}
 	},
-	signup: async (formData: SignupForm) => {
+	signup: async (URL: string, formData: SignupForm) => {
 		try {
-			const response = await axiosCustom.post('/api/auth/signup', JSON.stringify(formData));
+			const response = await axiosCustom.post(URL, JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
+			console.log(response);
 			const token = response.data;
 			const email = formData.email;
 			addUserInfo(token, email);

@@ -7,9 +7,8 @@ const axiosCustom = axios.create({
 
 axiosCustom.interceptors.request.use(
 	config => {
-		const storedToken = localStorage.getItem('SUPER_TOKEN');
-		if (!storedToken) return config;
-		const token = JSON.parse(storedToken);
+		const token = localStorage.getItem('SUPER_TOKEN');
+		if (!token) return config;
 		config.headers.Authorization = `Bearer ${token}`;
 		return config;
 	},
