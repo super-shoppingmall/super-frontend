@@ -23,7 +23,6 @@ export const AuthApi = {
 			const response = await axiosCustom.post(URL, JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
 			const data = await response.data;
-			console.log(data);
 			addUserInfo(data.token, data.username);
 			return 'SUCCESS';
 		} catch (error: unknown) {
@@ -34,7 +33,6 @@ export const AuthApi = {
 		try {
 			const response = await axiosCustom.post(URL, JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
-			console.log(response);
 			const token = response.data;
 			const email = formData.email;
 			addUserInfo(token, email);
