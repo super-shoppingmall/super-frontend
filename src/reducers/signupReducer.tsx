@@ -1,3 +1,4 @@
+import { AuthApi } from '../api/api';
 import { FormState } from '../components/Form/FormMessage';
 import validate from '../util/validate';
 
@@ -12,6 +13,7 @@ export interface FormData {
 	gender: string;
 	phone: string;
 	address: string;
+	addressDetail: string;
 	profileImage: string;
 	aboutMe: string;
 }
@@ -95,16 +97,26 @@ const signupReducer = (state: FormData, action: SignupAction): FormData => {
 			const filteredMessages = state.formState.filter(state => !state.includes(type));
 			const newMessages = validSingleField(state, type);
 
-			console.log(filteredMessages, newMessages);
-
 			return { ...state, formState: [...filteredMessages, ...newMessages] };
 		}
 
 		case 'SUBMIT_FORM': {
-			// API 추가
+			const formData = {
+				aboutMe: state.aboutMe,
+				address: `${state.address} ${state.addressDetail}`,
+				email: state.email,
+				gender: state.gender,
+				password: state.password,
+				passwordValid: true,
+				phone: state.phone,
+				profileImage: state.profileImage,
+			};
+
+			AuthApi.signup(formData);
+
 			return {
 				...state,
-				formState: ['SUCCESS'],
+				formState: ['ERROR_LOGIN'],
 			};
 		}
 	}

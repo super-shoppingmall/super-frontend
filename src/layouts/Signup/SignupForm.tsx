@@ -3,6 +3,8 @@ import { Navigate } from 'react-router-dom';
 import InputField from '../../components/Form/InputField';
 import signupReducer, { FormData, FormTextField } from '../../reducers/signupReducer';
 import FormMessage from '../../components/Form/FormMessage';
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+import type { Address } from 'react-daum-postcode';
 
 const initialData: FormData = {
 	formState: [],
@@ -11,8 +13,9 @@ const initialData: FormData = {
 	passwordConfirm: '',
 	passwordValid: null,
 	phone: '',
-	gender: '',
+	gender: 'male',
 	address: '',
+	addressDetail: '',
 	profileImage: '',
 	aboutMe: '',
 };
@@ -28,7 +31,25 @@ const SignupForm = () => {
 		setIsEmailUnique(true);
 	};
 
-	const addInputField = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// Form Validation & Value
+
+	const addInputField = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+	) => {
+		if (e.target.type === 'file') {
+			const target = e.target as HTMLInputElement;
+			const file = target.files && target.files[0];
+
+			dispatchFormData({
+				type: 'SET_FIELD',
+				value: {
+					...formData,
+					profileImage: JSON.stringify(file),
+				},
+			});
+			return;
+		}
+
 		dispatchFormData({
 			type: 'SET_FIELD',
 			value: {
@@ -51,6 +72,36 @@ const SignupForm = () => {
 		e.preventDefault();
 		if (!isEmailUnique || formState.length > 0) return;
 		dispatchFormData({ type: 'SUBMIT_FORM' });
+	};
+
+	// Form Address
+	const open = useDaumPostcodePopup();
+
+	const handleComplete = (data: Address) => {
+		let fullAddress = data.address;
+		let extraAddress = '';
+
+		if (data.addressType === 'R') {
+			if (data.bname !== '') {
+				extraAddress += data.bname;
+			}
+			if (data.buildingName !== '') {
+				extraAddress += extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+			}
+			fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+		}
+
+		dispatchFormData({
+			type: 'SET_FIELD',
+			value: {
+				...formData,
+				address: `(${data.zonecode}) ${fullAddress}`,
+			},
+		});
+	};
+
+	const handleClick = () => {
+		open({ onComplete: handleComplete });
 	};
 
 	if (formState.includes('SUCCESS')) {
@@ -158,16 +209,30 @@ const SignupForm = () => {
 
 				{/* 주소 */}
 				<div>
-					<div className='text-sm mt-3'>주소</div>
-					<div className='relative flex mt-1 rounded-sm shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md py-1 px-2'>
-						<span className='block flex-1 w-80 h-10 cursor-pointer'>{formData.address}</span>
-						<button type='button' className='btn-form-sm'>
+					<InputField theme='SECONDARY' id='address' label='주소' disabled>
+						<textarea
+							id='address'
+							name='address'
+							className='w-80 input-text pr-8'
+							rows={formData.address ? 2 : 1}
+							value={formData.address}
+							readOnly
+							disabled
+						/>
+						<button type='button' className='btn-form-sm' onClick={handleClick}>
 							검색
 						</button>
-					</div>
-					<div className='relative flex mt-2 rounded-sm shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md py-1 px-2'>
-						<span className='block flex-1 w-80 h-10 cursor-pointer'>{formData.address}</span>
-					</div>
+					</InputField>
+					<InputField theme='PRIMARY' id='addressDetail' label='나머지 주소' isRequired>
+						<input
+							type='text'
+							id='addressDetail'
+							name='addressDetail'
+							className='flex-1 input-text'
+							placeholder='나머지 주소'
+							onChange={addInputField}
+						/>
+					</InputField>
 				</div>
 
 				{/* 프로필 사진 */}
@@ -202,7 +267,12 @@ const SignupForm = () => {
 				{/* 성별 */}
 				<div>
 					<InputField theme='SECONDARY' id='gender' label='성별'>
-						<select name='gender' id='gender' className='flex-1 input-text' onChange={() => {}}>
+						<select
+							name='gender'
+							id='gender'
+							className='flex-1 input-text'
+							onChange={addInputField}
+						>
 							<option value='male'>남성</option>
 							<option value='female'>여성</option>
 						</select>
@@ -212,7 +282,12 @@ const SignupForm = () => {
 				{/* 자기소개 */}
 				<div>
 					<InputField theme='SECONDARY' id='aboutMe' label='자기소개'>
-						<textarea name='aboutMe' id='aboutMe' className='w-full h-[160px]'></textarea>
+						<textarea
+							name='aboutMe'
+							id='aboutMe'
+							className='w-full h-[160px]'
+							onChange={addInputField}
+						></textarea>
 					</InputField>
 				</div>
 
