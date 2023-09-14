@@ -15,6 +15,7 @@ import CartContextProvider from './context/cart-context';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import OrderCompleted from './components/OrderCompleted';
 import Header from './components/Header/Header';
 import MyProductList from './components/List/MyProductList';
 const App: React.FC = () => {
@@ -28,6 +29,8 @@ const App: React.FC = () => {
 					<Route index element={<MobileAuthForm />} />
 					<Route path='step1' element={<SignupForm />} />
 				</Route>
+				<Route path='/productdetail' element={<ProductDetail />} />
+				<Route path='/ordered' element={<OrderCompleted />} />
 				<Route path='/detail/:productId' element={<ProductDetail />} />
 				<Route path='/register' element={<ProductRegister />} />
 				<Route path='/productlist/:pageName' element={<ProductList />} />
