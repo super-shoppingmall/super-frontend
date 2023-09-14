@@ -15,45 +15,51 @@ import CartContextProvider from './context/cart-context';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import OrderCompleted from './components/OrderCompleted';
+import Header from './components/Header/Header';
 
 const App: React.FC = () => {
 	return (
-		<Routes>
-			<Route path='/' element={<Main />} />
-			<Route path='/login' element={<Login />} />
-			<Route path='/signup' element={<Signup />}>
-				<Route index element={<MobileAuthForm />} />
-				<Route path='step1' element={<SignupForm />} />
-			</Route>
-			<Route path='/detail' element={<ProductDetail />} />
-			<Route path='/register' element={<ProductRegister />} />
-			<Route path='/productlist' element={<ProductList />} />
-			<Route path='/productdetail' element={<ProductDetail />} />
-			<Route
-				path='/profile'
-				element={
-					<CartContextProvider>
-						<Profile />
-					</CartContextProvider>
-				}
-			></Route>
-			<Route
-				path='/cart'
-				element={
-					<CartContextProvider>
-						<ShoppingCart />
-					</CartContextProvider>
-				}
-			></Route>
-			<Route
-				path='/order'
-				element={
-					<CartContextProvider>
-						<Order />
-					</CartContextProvider>
-				}
-			></Route>
-		</Routes>
+		<>
+			<Header />
+			<Routes>
+				<Route path='/' element={<Main />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/signup' element={<Signup />}>
+					<Route index element={<MobileAuthForm />} />
+					<Route path='step1' element={<SignupForm />} />
+				</Route>
+				<Route path='/detail' element={<ProductDetail />} />
+				<Route path='/register' element={<ProductRegister />} />
+				<Route path='/productlist' element={<ProductList />} />
+				<Route path='/productdetail' element={<ProductDetail />} />
+				<Route path='/ordered' element={<OrderCompleted />} />
+				<Route
+					path='/profile'
+					element={
+						<CartContextProvider>
+							<Profile />
+						</CartContextProvider>
+					}
+				></Route>
+				<Route
+					path='/cart'
+					element={
+						<CartContextProvider>
+							<ShoppingCart />
+						</CartContextProvider>
+					}
+				></Route>
+				<Route
+					path='/order'
+					element={
+						<CartContextProvider>
+							<Order />
+						</CartContextProvider>
+					}
+				></Route>
+			</Routes>
+		</>
 	);
 };
 
