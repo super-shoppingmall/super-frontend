@@ -29,11 +29,11 @@ const App: React.FC = () => {
 					<Route index element={<MobileAuthForm />} />
 					<Route path='step1' element={<SignupForm />} />
 				</Route>
-				<Route path='/detail' element={<ProductDetail />} />
-				<Route path='/register' element={<ProductRegister />} />
-				<Route path='/productlist' element={<ProductList />} />
 				<Route path='/productdetail' element={<ProductDetail />} />
 				<Route path='/ordered' element={<OrderCompleted />} />
+				<Route path='/detail/:productId' element={<ProductDetail />} />
+				<Route path='/register' element={<ProductRegister />} />
+				<Route path='/productlist/:pageName' element={<ProductList />} />
 				<Route
 					path='/profile'
 					element={

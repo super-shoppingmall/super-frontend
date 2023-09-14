@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ProductItem from './ProductItem';
-import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 type Item = {
 	id: number;
@@ -10,23 +10,7 @@ type Item = {
 };
 
 const ItemList = () => {
-	const param = useParams();
-
-	const [pageTitle, setPageTitle] = useState('');
-
-	const titleChoose = () => {
-		if (param.pageName === 'food') {
-			setPageTitle('사료');
-		} else if (param.pageName === 'snack') {
-			setPageTitle('간식');
-		} else if (param.pageName === 'all') {
-			setPageTitle('전체 용품');
-		} else if (param.pageName === 'healthfood') {
-			setPageTitle('건강식품');
-		}
-	};
-
-	console.log(param);
+	const navigate = useNavigate();
 	const items: Array<Item> = [
 		{
 			id: 1,
@@ -113,14 +97,25 @@ const ItemList = () => {
 				'https://www-prd-kr.gentlemonster.com/media/catalog/product/cache/6c6f229b8a7ab97f51028776641e27d1/1/1/11001_PASO_BL3_2_1.jpg',
 		},
 	];
+	const authCheck = useState('false');
 
-	useEffect(() => {
-		titleChoose();
-	}, [param]);
+	const registerMove = () => {
+		navigate('/register');
+	};
 
 	return (
-		<main className='.container my-10 mx-40'>
-			<div className='font-bold text-xl mb-5'>{pageTitle}</div>
+		<main className='.container m-14'>
+			<div className='font-bold text-xl mb-5'>상품 리스트</div>
+			{authCheck ? (
+				<div className='flex justify-end mb-3 mx-4'>
+					<button
+						className='border px-5 py-1.5 bg-gray-400 text-white'
+						onClick={() => registerMove()}
+					>
+						상품 등록
+					</button>
+				</div>
+			) : null}
 			<div className='grid gap-x-1 gap-8 grid-cols-5'>
 				{items.map((item, index) => (
 					<ProductItem
