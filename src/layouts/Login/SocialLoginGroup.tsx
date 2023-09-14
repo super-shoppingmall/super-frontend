@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import IconNaver from '../../assets/ic-naver.svg';
 import IconKakao from '../../assets/ic-kakao.svg';
 import ButtonImage from '../../components/Button/ImageButton';
+import { AuthApi } from '../../api/api';
 
 const NAVER_CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
 const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
@@ -34,7 +35,7 @@ const SocialLoginGroup = () => {
 
 	useEffect(() => {
 		if (code.length <= 0 || state.length <= 0) return;
-		// NOTE: 추후 토큰 발행을 위한 백엔드 API 적용 예정
+		AuthApi.sendOAuthInfo(code, state);
 	}, [code, state]);
 
 	return (

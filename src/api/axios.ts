@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-const axiosCustom = axios.create();
-
-axiosCustom.defaults.baseURL = process.env.REACT_APP_API_URL;
+const axiosCustom = axios.create({
+	baseURL: process.env.REACT_APP_API_URL,
+	headers: { 'Content-Type': 'application/json' },
+});
 
 axiosCustom.interceptors.request.use(
 	config => {

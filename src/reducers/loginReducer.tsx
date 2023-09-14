@@ -1,3 +1,4 @@
+import { AuthApi } from '../api/api';
 import { FormState } from '../components/Form/FormMessage';
 import validate from '../util/validate';
 
@@ -56,15 +57,10 @@ function loginReducer(state: FormData, action: LoginAction): FormData {
 		}
 
 		case 'SUBMIT_FORM': {
-			// return {
-			// 	...state,
-			// 	formState: ['ERROR_LOGIN'],
-			// };
-			// API 추가
+			AuthApi.login({ email: state.email, password: state.password });
 			return {
 				...state,
-				token: 'khsdfksdhfkshkhfk',
-				formState: ['SUCCESS'],
+				formState: ['ERROR_LOGIN'],
 			};
 		}
 	}

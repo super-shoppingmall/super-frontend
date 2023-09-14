@@ -4,11 +4,12 @@ interface InputField {
 	theme: Theme;
 	id: string;
 	label: string;
+	disabled?: boolean;
 	isRequired?: boolean;
 	children: React.ReactNode;
 }
 
-const InputField = ({ theme, id, label, isRequired, children }: InputField) => {
+const InputField = ({ theme, id, label, disabled, isRequired, children }: InputField) => {
 	const isPrimary = theme === 'PRIMARY';
 
 	return (
@@ -17,7 +18,11 @@ const InputField = ({ theme, id, label, isRequired, children }: InputField) => {
 				{isRequired && <span className='text-red-500 text-md align-middle'>*</span>}
 				{label}
 			</label>
-			<div className='relative flex rounded-sm shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md py-1 px-2'>
+			<div
+				className={`relative flex rounded-sm shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md py-1 px-2 ${
+					disabled ? 'bg-gray-100' : ''
+				}`}
+			>
 				{children}
 			</div>
 		</div>
