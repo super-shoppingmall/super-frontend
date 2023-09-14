@@ -51,6 +51,15 @@ const Order: React.FC = () => {
 
 	/** 결제하기 버튼 기능 */
 	async function handlePay() {
+		if (+totalAmount > +paymoney) {
+			setIsInsufficient(true);
+			setPayTypeStyle('border border-red-500 border-2');
+			return;
+		} else {
+			setIsInsufficient(false);
+			setPayTypeStyle('border border-black');
+		}
+
 		const response = await fetch('http://3.34.114.250:8080/api/paymoney', {
 			method: 'PUT',
 			headers: {

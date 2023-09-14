@@ -54,7 +54,7 @@ const ShoppingCart: React.FC = () => {
 					/>
 
 					<button className='w-full bg-black h-12 text-white font-bold mb-8' onClick={goToOrder}>
-						결제하기
+						주문하기
 					</button>
 					<div className='w-full text-sm'>무료 반품 서비스가 제공되오니 안심하고 구매하십시오.</div>
 					<div className='w-full text-sm'>배송에 대한 자세한 내용을 확인하십시오.</div>
