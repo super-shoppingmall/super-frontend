@@ -18,11 +18,13 @@ import Header from './components/Header/Header';
 
 const App: React.FC = () => {
 	return (
-		<Routes>
-			<Route path='/' element={<Main />} />
-			<Route path='/login/*' element={<Login />} />
-			<Route path='/signup/*' element={<Signup />} />
-			<Route path='/productdetail' element={<ProductDetail />} />
+		<>
+			<Header />
+			<Routes>
+				<Route path='/' element={<Main />} />
+				<Route path='/login/*' element={<Login />} />
+				<Route path='/signup/*' element={<Signup />} />
+				<Route path='/productdetail' element={<ProductDetail />} />
 				<Route path='/ordered' element={<OrderCompleted />} />
 				<Route path='/detail/:productId' element={<ProductDetail />} />
 				<Route path='/register' element={<ProductRegister />} />
@@ -51,7 +53,8 @@ const App: React.FC = () => {
 						</CartContextProvider>
 					}
 				></Route>
-		</Routes>
+			</Routes>
+		</>
 	);
 };
 
