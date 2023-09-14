@@ -10,8 +10,8 @@ type Item = {
 const ProductItem = ({ id, name, price, itemImg }: Item) => {
 	const navigete = useNavigate();
 
-	const pagemove = () => {
-		navigete('/itemdetail');
+	const pagemove = (param: number) => {
+		navigete(`/detail/:${param}`);
 	};
 
 	return (
@@ -19,7 +19,7 @@ const ProductItem = ({ id, name, price, itemImg }: Item) => {
 			key={id}
 			className='mx-3'
 			onClick={() => {
-				pagemove();
+				pagemove(id);
 			}}
 		>
 			<div className='w-full rounded-xl overflow-hidden mb-1'>

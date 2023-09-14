@@ -10,19 +10,19 @@ const Header = () => {
 
 	const gnbLists = [
 		{
-			link: '/',
+			link: '/productList/food',
 			name: '사료',
 		},
 		{
-			link: '/',
+			link: '/productList/snack',
 			name: '간식',
 		},
 		{
-			link: '/',
+			link: '/productList/all',
 			name: '전체용품',
 		},
 		{
-			link: '/',
+			link: '/productList/healthfood',
 			name: '건강식품',
 		},
 	];
@@ -32,7 +32,7 @@ const Header = () => {
 			<div className='max-w-[1200px] mx-auto'>
 				<nav className='bg-white border-gray-200 px-6 py-2.5 dark:bg-gray-800'>
 					<div className='flex justify-between items-center mx-auto max-w-screen-xl'>
-						<Link to='https://flowbite.com' className='flex items-center'>
+						<Link to='/' className='flex items-center'>
 							<img src={Logo} alt='슈퍼 펫' className='w-8 mr-2' />
 							<span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
 								SUPER PET
