@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -7,6 +7,7 @@ import LoginInfoLinks from '../layouts/Login/LoginInfoLinks';
 import SocialLoginGroup from '../layouts/Login/SocialLoginGroup';
 
 const Login = () => {
+	const [key, setKey] = useState(0);
 	const navigate = useNavigate();
 	const { isLogin } = useContext(AuthContext);
 
@@ -30,7 +31,7 @@ const Login = () => {
 
 			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm'>
 				<section className='mt-4'>
-					<LoginForm />
+					<LoginForm key={key} />
 				</section>
 				<section className='mt-4'>
 					<LoginInfoLinks />
@@ -38,7 +39,7 @@ const Login = () => {
 				<p className='my-4'>
 					<span className='block text-gray-400 text-xs text-center'>
 						혹시 판매자로 로그인을 원하시는 경우, <br />
-						<Link to='/login/member' className='underline'>
+						<Link to='/login/member' className='underline' onClick={() => setKey(key + 1)}>
 							이곳
 						</Link>
 						을 클릭해 주세요.

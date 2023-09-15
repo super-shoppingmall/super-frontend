@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import SignupForm from '../layouts/Signup/SignupForm';
 
 const Signup = () => {
+	const [key, setKey] = useState(0);
 	return (
 		<div className='min-w-min px-10'>
 			<div className='sm:mx-auto sm:w-full sm:max-w-sm mb-8'>
@@ -11,7 +13,7 @@ const Signup = () => {
 				<p className='my-4'>
 					<span className='block text-gray-400 text-xs text-center'>
 						혹시 판매자로 회원가입을 원하시는 경우, <br />
-						<Link to='/signup/member' className='underline'>
+						<Link to='/signup/member' className='underline' onClick={() => setKey(key + 1)}>
 							이곳
 						</Link>
 						을 클릭해 주세요.
@@ -20,7 +22,7 @@ const Signup = () => {
 			</div>
 			<article className='mt-6 sm:mx-auto sm:w-full sm:max-w-sm'>
 				<section className='mt-4'>
-					<SignupForm />
+					<SignupForm key={key} />
 				</section>
 			</article>
 		</div>
