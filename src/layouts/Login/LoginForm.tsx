@@ -1,26 +1,23 @@
-import { useContext, useReducer, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useReducer } from 'react';
 
 import InputField from '../../components/Form/InputField';
 import FormMessage from '../../components/Form/FormMessage';
 import ErrorIcon from '../../components/Icon/ErrorIcon';
-import { AuthContext } from '../../context/AuthContext';
 
+import { AuthApi } from '../../api/api';
 import loginReducer, { FormData } from '../../reducers/loginReducer';
 
 const initialData: FormData = {
 	formState: [],
 	email: '',
 	password: '',
-	token: '',
+	loginCount: 0,
 };
 
 const LoginForm = () => {
-	const { login } = useContext(AuthContext);
 	const [formData, dispatchFormData] = useReducer(loginReducer, initialData);
-	const [loginCount, setLoginCount] = useState(0);
-
 	const formState = formData.formState;
+	const loginCount = formData.loginCount;
 
 	const addInputField = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatchFormData({
@@ -36,21 +33,21 @@ const LoginForm = () => {
 		dispatchFormData({ type: 'VALID_FIELD' });
 	};
 
-	const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleForm = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (formState.length > 0) return;
-		if (loginCount >= 4) {
-			setLoginCount(5);
-			return;
-		}
-		dispatchFormData({ type: 'SUBMIT_FORM' });
-		setLoginCount(pLoginCount => pLoginCount + 1);
-	};
+		try {
+			const result = await AuthApi.login({ email: formData.email, password: formData.password });
+			const loginCount = result === 'SUCCESS' ? 0 : formData.loginCount + 1;
 
-	if (formState.includes('SUCCESS')) {
-		login(formData.token);
-		return <Navigate to='/' />;
-	}
+			dispatchFormData({
+				type: 'SUBMIT_FORM',
+				value: { ...formData, loginCount, formState: [result] },
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	return (
 		<>
@@ -106,6 +103,7 @@ const LoginForm = () => {
 				<button
 					className='w-full h-10 mt-4 px-6 font-400 rounded-lg bg-black text-white'
 					type='submit'
+					disabled={loginCount >= 5}
 					onClick={validateForm}
 				>
 					로그인

@@ -26,6 +26,7 @@ export const AuthApi = {
 			addUserInfo(data.token, data.username);
 			return 'SUCCESS';
 		} catch (error: unknown) {
+			alert('아이디 혹은 비밀번호를 다시 확인해 주세요.');
 			return 'ERROR_LOGIN';
 		}
 	},
