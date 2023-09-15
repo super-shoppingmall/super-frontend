@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { LoginForm, SignupForm } from '../interface/request';
-import axiosCustom from './axios';
+import http from './axios';
 
 const addUserInfo = (token: string, email: string) => {
 	localStorage.setItem('SUPER_TOKEN', token);
@@ -11,7 +11,7 @@ const addUserInfo = (token: string, email: string) => {
 export const AuthApi = {
 	sendOAuthInfo: async (code: string, state: string) => {
 		try {
-			const response = await axiosCustom.post('/api/oauth2', JSON.stringify({ code, state }));
+			const response = await http.post('/api/oauth2', JSON.stringify({ code, state }));
 			if (response.status !== 200) throw Error();
 		} catch (error: unknown) {
 			alert('해당 서비스는 준비중입니다.');
@@ -20,7 +20,7 @@ export const AuthApi = {
 	},
 	login: async (formData: LoginForm) => {
 		try {
-			const response = await axiosCustom.post('/api/auth/login', JSON.stringify(formData));
+			const response = await http.post('/api/auth/login', JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
 			const data = await response.data;
 			addUserInfo(data.token, data.username);
@@ -32,7 +32,7 @@ export const AuthApi = {
 	},
 	signup: async (formData: SignupForm) => {
 		try {
-			const response = await axiosCustom.post('/api/auth/signup', JSON.stringify(formData));
+			const response = await http.post('/api/auth/signup', JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
 			const token = response.data;
 			const email = formData.email;
@@ -51,10 +51,7 @@ export const AuthApi = {
 	},
 	checkEmailUnique: async (email: string) => {
 		try {
-			const response = await axiosCustom.post(
-				'/api/members/check-email',
-				JSON.stringify({ email })
-			);
+			const response = await http.post('/api/members/check-email', JSON.stringify({ email }));
 			if (response.status !== 200) throw Error();
 			alert('중복확인이 완료되었습니다.');
 			return true;
