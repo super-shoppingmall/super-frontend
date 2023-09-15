@@ -101,8 +101,6 @@ const signupReducer = (state: FormData, action: SignupAction): FormData => {
 		}
 
 		case 'SUBMIT_FORM': {
-			const URL = location.pathname.includes('member') ? '/api/members/signup' : '/api/auth/login';
-
 			const formData = {
 				aboutMe: state.aboutMe,
 				address: `${state.address} ${state.addressDetail}`,
@@ -114,7 +112,7 @@ const signupReducer = (state: FormData, action: SignupAction): FormData => {
 				profileImage: state.profileImage,
 			};
 
-			AuthApi.signup(URL, formData);
+			AuthApi.signup(formData);
 
 			return {
 				...state,

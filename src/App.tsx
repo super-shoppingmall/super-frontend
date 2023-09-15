@@ -22,8 +22,10 @@ const App: React.FC = () => {
 			<Header />
 			<Routes>
 				<Route path='/' element={<Main />} />
-				<Route path='/login/*' element={<Login />} />
-				<Route path='/signup/*' element={<Signup />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/login/member' element={<Login />} />
+				<Route path='/signup/' element={<Signup />} />
+				<Route path='/signup/member' element={<Signup />} />
 				<Route path='/productdetail' element={<ProductDetail />} />
 				<Route path='/ordered' element={<OrderCompleted />} />
 				<Route path='/detail/:productId' element={<ProductDetail />} />

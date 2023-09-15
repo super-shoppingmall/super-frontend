@@ -5,6 +5,7 @@ import signupReducer, { FormData, FormTextField } from '../../reducers/signupRed
 import FormMessage from '../../components/Form/FormMessage';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import type { Address } from 'react-daum-postcode';
+import { AuthApi } from '../../api/api';
 
 const initialData: FormData = {
 	formState: [],
@@ -26,9 +27,13 @@ const SignupForm = () => {
 
 	const formState = formData.formState;
 
-	const handleEmailUnique = () => {
-		// NOTE: API 추가 필요
-		setIsEmailUnique(true);
+	const handleEmailUnique = async () => {
+		try {
+			const response = await AuthApi.checkEmailUnique(formData.email);
+			setIsEmailUnique(response);
+		} catch (err) {
+			setIsEmailUnique(false);
+		}
 	};
 
 	// Form Validation & Value
@@ -48,6 +53,23 @@ const SignupForm = () => {
 				},
 			});
 			return;
+		}
+
+		if (e.target.name === 'email') {
+			setIsEmailUnique(false);
+		}
+
+		if (e.target.name === 'password') {
+			const updatedErrorState =
+				e.target.value !== formData.passwordConfirm ? 'ERROR_PWD_CONFIRM' : '';
+			dispatchFormData({
+				type: 'SET_FIELD',
+				value: {
+					...formData,
+					password: e.target.value,
+					formState: [...formData.formState, updatedErrorState],
+				},
+			});
 		}
 
 		dispatchFormData({
