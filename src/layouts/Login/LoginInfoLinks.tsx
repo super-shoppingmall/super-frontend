@@ -12,7 +12,7 @@ const LoginInfoLinks = () => {
 				<div className='inline-block w-px h-full min-h-[0.7em] bg-gray-300 ml-2' aria-hidden></div>
 			</li>
 			<li className='flex items-center'>
-				<Link to=''>회원가입</Link>
+				<Link to='/signup'>회원가입</Link>
 			</li>
 		</ul>
 	);
