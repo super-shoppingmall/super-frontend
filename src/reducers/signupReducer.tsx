@@ -101,7 +101,7 @@ const signupReducer = (state: FormData, action: SignupAction): FormData => {
 		}
 
 		case 'SUBMIT_FORM': {
-			const URL = location.pathname.includes('member') ? '/api/members/signup' : '/api/auth/login';
+			const URL = location.pathname.includes('member') ? '/api/members/signup' : '/api/auth/signup';
 
 			const formData = {
 				aboutMe: state.aboutMe,
