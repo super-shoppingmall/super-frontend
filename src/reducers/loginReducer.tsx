@@ -58,12 +58,7 @@ function loginReducer(state: FormData, action: LoginAction): FormData {
 
 		case 'SUBMIT_FORM': {
 			const formData = { email: state.email, password: state.password };
-
-			const URL = location.pathname.includes('member')
-				? `/api/members/login?email=${formData.email}&password=${formData.password}`
-				: '/api/auth/login';
-
-			AuthApi.login(URL, formData);
+			AuthApi.login(formData);
 			return {
 				...state,
 				formState: ['ERROR_LOGIN'],

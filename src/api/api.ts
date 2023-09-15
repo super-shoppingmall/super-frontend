@@ -18,9 +18,9 @@ export const AuthApi = {
 			window.location.href = '/login';
 		}
 	},
-	login: async (URL: string, formData: LoginForm) => {
+	login: async (formData: LoginForm) => {
 		try {
-			const response = await axiosCustom.post(URL, JSON.stringify(formData));
+			const response = await axiosCustom.post('/api/auth/login', JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
 			const data = await response.data;
 			addUserInfo(data.token, data.username);
@@ -29,9 +29,9 @@ export const AuthApi = {
 			return 'ERROR_LOGIN';
 		}
 	},
-	signup: async (URL: string, formData: SignupForm) => {
+	signup: async (formData: SignupForm) => {
 		try {
-			const response = await axiosCustom.post(URL, JSON.stringify(formData));
+			const response = await axiosCustom.post('/api/auth/signup', JSON.stringify(formData));
 			if (response.status !== 200) throw Error();
 			const token = response.data;
 			const email = formData.email;
@@ -46,6 +46,20 @@ export const AuthApi = {
 				default:
 					break;
 			}
+		}
+	},
+	checkEmailUnique: async (email: string) => {
+		try {
+			const response = await axiosCustom.post(
+				'/api/members/check-email',
+				JSON.stringify({ email })
+			);
+			if (response.status !== 200) throw Error();
+			alert('중복확인이 완료되었습니다.');
+			return true;
+		} catch (error: unknown) {
+			alert('동일한 이메일이 존재합니다.');
+			return false;
 		}
 	},
 };
