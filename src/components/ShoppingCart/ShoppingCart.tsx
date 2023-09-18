@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
-import CartItem from './CartItem';
-import { CartContext } from '../../context/cart-context';
 import { useNavigate } from 'react-router-dom';
+
+import { CartContext } from '../../context/cart-context';
+
+import CartItem from './CartItem';
 import ShoppingCartTotal from './ShoppingCartTotal';
 
 const ShoppingCart: React.FC = () => {

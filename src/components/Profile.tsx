@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+
 import { CartContext } from '../context/cart-context';
+
 import CartItem from './ShoppingCart/CartItem';
 import ShoppingCartTotal from './ShoppingCart/ShoppingCartTotal';
 import PointRefill from './Button/PointRefill';
-import IconWrite from '../assets/ic-write.svg';
-import { createPortal } from 'react-dom';
 import Backdrop from './Modal/Backdrop';
 import Modal from './Modal/Modal';
+
+import IconWrite from '../assets/ic-write.svg';
 
 type User = {
 	email: string;

@@ -1,4 +1,4 @@
-import { AuthApi } from '../api/api';
+// import { AuthApi } from '../api/api';
 import { FormState } from '../components/Form/FormMessage';
 import validate from '../util/validate';
 
@@ -6,7 +6,7 @@ export interface FormData {
 	formState: FormState[];
 	email: string;
 	password: string;
-	token: string;
+	loginCount: number;
 }
 
 export interface LoginAction {
@@ -57,12 +57,8 @@ function loginReducer(state: FormData, action: LoginAction): FormData {
 		}
 
 		case 'SUBMIT_FORM': {
-			const formData = { email: state.email, password: state.password };
-			AuthApi.login(formData);
-			return {
-				...state,
-				formState: ['ERROR_LOGIN'],
-			};
+			if (!action.value) return state;
+			return action.value;
 		}
 	}
 }

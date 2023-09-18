@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -6,7 +6,13 @@ import { AuthContext } from '../../context/AuthContext';
 import Logo from '../../assets/logo.png';
 
 const Header = () => {
+	const [userID, setUserID] = useState('');
 	const { isLogin, logout } = useContext(AuthContext);
+
+	useEffect(() => {
+		const id = localStorage.getItem('SUPER_ID') || '';
+		setUserID(id);
+	}, []);
 
 	const gnbLists = [
 		{
@@ -42,9 +48,14 @@ const Header = () => {
 							{isLogin ? (
 								<ul className='flex font-medium text-sm'>
 									<li>
-										<span className='user-list'>
-											<span className='font-semibold'>ooo님!</span> 환영합니다.
+										<span className='user-list hover:font-normal'>
+											<span className='font-semibold'>{userID}님!</span> 환영합니다.
 										</span>
+									</li>
+									<li>
+										<Link to='/profile' className='user-list'>
+											마이페이지
+										</Link>
 									</li>
 									<li>
 										<Link to='/cart' className='user-list'>

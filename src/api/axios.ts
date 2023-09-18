@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const axiosCustom = axios.create({
+const http = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
 	headers: { 'Content-Type': 'application/json' },
 });
 
-axiosCustom.interceptors.request.use(
+http.interceptors.request.use(
 	config => {
 		const token = localStorage.getItem('SUPER_TOKEN');
 		if (!token) return config;
@@ -17,7 +17,7 @@ axiosCustom.interceptors.request.use(
 	}
 );
 
-axios.interceptors.response.use(
+http.interceptors.response.use(
 	response => {
 		return response;
 	},
@@ -30,4 +30,4 @@ axios.interceptors.response.use(
 	}
 );
 
-export default axiosCustom;
+export default http;
