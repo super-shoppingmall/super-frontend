@@ -1,4 +1,5 @@
 import { PropsWithChildren, createContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext({
 	isLogin: false,
@@ -9,6 +10,7 @@ export const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
+	const navigate = useNavigate();
 	const [isLogin, setIsLogin] = useState(false);
 
 	const handleLogin = (token: string) => {
@@ -17,8 +19,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 	};
 
 	const handleLogout = () => {
-		localStorage.setItem('SUPER_TOKEN', '');
+		localStorage.removeItem('SUPER_TOKEN');
 		setIsLogin(false);
+		navigate('/');
 	};
 
 	useEffect(() => {
