@@ -9,7 +9,7 @@ type Item = {
 	itemImg: string;
 };
 
-const ItemList = () => {
+const ProductList = () => {
 	const param = useParams();
 
 	const [pageTitle, setPageTitle] = useState('');
@@ -136,4 +136,4 @@ const ItemList = () => {
 	);
 };
 
-export default ItemList;
+export default ProductList;

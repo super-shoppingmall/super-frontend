@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Header from './components/Header/Header';
+import Wrapper from './components/Wrapper/Wrapper';
 import Main from './components/Main';
 import Order from './components/Order';
 import ProductList from './components/List/ProductList';
@@ -11,12 +12,12 @@ import Profile from './components/Profile';
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import OrderCompleted from './components/OrderCompleted';
 import Footer from './components/Footer/Footer';
+import MyProductList from './components/List/MyProductList';
 
 import CartContextProvider from './context/cart-context';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Wrapper from './components/Wrapper/Wrapper';
 
 const App: React.FC = () => {
 	return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
 					<Route path='/detail/:productId' element={<ProductDetail />} />
 					<Route path='/register' element={<ProductRegister />} />
 					<Route path='/productlist/:pageName' element={<ProductList />} />
+					<Route path='/myproductlist' element={<MyProductList />} />
 					<Route
 						path='/profile'
 						element={
