@@ -17,7 +17,7 @@ http.interceptors.request.use(
 	}
 );
 
-axios.interceptors.response.use(
+http.interceptors.response.use(
 	response => {
 		return response;
 	},

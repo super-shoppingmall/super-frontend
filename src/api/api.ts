@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { LoginForm, SignupForm } from '../interface/request';
+
 import http from './axios';
 
 const addUserInfo = (token: string, email: string) => {
